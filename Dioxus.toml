@@ -7,6 +7,12 @@ publisher = "Rotero"
 # macOS uses the .icns, Windows the .ico; the bundler picks per platform.
 icon = ["assets/icon.icns", "assets/icon.ico", "assets/icon.png"]
 
+# dx defaults to `OfflineInstaller`, which embeds the ~170 MB WebView2 runtime
+# in the installer. WebView2 ships with Windows 11 and current Windows 10, so
+# only fetch the small bootstrapper, and only when the runtime is missing.
+[bundle.windows]
+webview_install_mode = { DownloadBootstrapper = { silent = true } }
+
 # The NSIS `-setup.exe` installs into %LOCALAPPDATA% without UAC elevation
 # (the MSI always needs admin). CurrentUser is already the default; it is
 # spelled out so it cannot silently change.
