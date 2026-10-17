@@ -15,7 +15,7 @@ the file for your platform.
 | Platform | File |
 | --- | --- |
 | macOS (Apple silicon) | `Rotero-*-macos-arm64.dmg` |
-| Windows (x64) | `Rotero-*-windows-x64.msi`, or `.zip` to run without installing |
+| Windows (x64) | `Rotero-*-windows-x64-setup.exe` (per-user, no admin), `Rotero-*-windows-x64.msi` (system-wide, needs admin), or `.zip` to run without installing |
 | Linux (x64) | `Rotero-*-linux-x64.deb` on Debian/Ubuntu, or `.tar.gz` (portable; includes a desktop installer) |
 
 macOS on Intel is not prebuilt — [build from source](#building-from-source)

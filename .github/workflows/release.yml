@@ -153,7 +153,9 @@ jobs:
 
       - name: Build
         shell: bash
-        run: dx bundle --release --package-types msi
+        # msi needs admin to install; nsis produces a per-user setup .exe
+        # (see [bundle.windows.nsis] in Dioxus.toml) that does not.
+        run: dx bundle --release --package-types msi --package-types nsis
 
       - name: Stage the portable zip
         shell: bash
@@ -172,6 +174,10 @@ jobs:
           MSI=$(find target/dx -name '*.msi' | head -1)
           test -n "$MSI" || { echo "MSI not found"; exit 1; }
           cp "$MSI" "Rotero-${{ github.ref_name }}-windows-x64.msi"
+          # Per-user installer: no admin rights required.
+          SETUP=$(find target/dx -name '*-setup.exe' | head -1)
+          test -n "$SETUP" || { echo "NSIS setup.exe not found"; exit 1; }
+          cp "$SETUP" "Rotero-${{ github.ref_name }}-windows-x64-setup.exe"
 
       - uses: actions/upload-artifact@v4
         with:
@@ -179,6 +185,7 @@ jobs:
           path: |
             Rotero-*-windows-x64.zip
             Rotero-*-windows-x64.msi
+            Rotero-*-windows-x64-setup.exe
           if-no-files-found: error
 
   build-linux:
@@ -269,6 +276,7 @@ jobs:
             Rotero-*-macos-*.zip
             Rotero-*-windows-x64.zip
             Rotero-*-windows-x64.msi
+            Rotero-*-windows-x64-setup.exe
             Rotero-*-linux-x64.tar.gz
             Rotero-*-linux-x64.deb
             Rotero-Extension-*.zip

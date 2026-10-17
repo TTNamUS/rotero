@@ -6,3 +6,9 @@ identifier = "com.rotero.Rotero"
 publisher = "Rotero"
 # macOS uses the .icns, Windows the .ico; the bundler picks per platform.
 icon = ["assets/icon.icns", "assets/icon.ico", "assets/icon.png"]
+
+# The NSIS `-setup.exe` installs into %LOCALAPPDATA% without UAC elevation
+# (the MSI always needs admin). CurrentUser is already the default; it is
+# spelled out so it cannot silently change.
+[bundle.windows.nsis]
+install_mode = "CurrentUser"
