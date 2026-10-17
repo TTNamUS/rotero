@@ -1,0 +1,6 @@
+# Link the MSVC C runtime statically on Windows. Without this rotero.exe imports
+# VCRUNTIME140_1.dll / MSVCP140.dll, which only exist where the Visual C++
+# Redistributable is installed -- a fresh Windows machine fails to start the app
+# with "VCRUNTIME140_1.dll was not found". Costs ~1 MB; needs no installer.
+[target.x86_64-pc-windows-msvc]
+rustflags = ["-C", "target-feature=+crt-static"]
